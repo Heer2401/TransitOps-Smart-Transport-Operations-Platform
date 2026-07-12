@@ -1,101 +1,137 @@
-# TransitOps - Smart Transport Operations Platform
+# 🚌 TransitOps — Smart Transport Operations Platform
 
-TransitOps is a fleet management and smart transport operations platform built using the MERN stack (MongoDB, Express, React, Node.js). It features a robust dashboard to manage vehicles, drivers, trips, fuel logs, maintenance schedules, and expenses.
+TransitOps is a modern, enterprise-grade fleet management and smart transport operations platform built using the **MERN Stack** (MongoDB, Express, React, Node.js). 
+
+It features an elegant pastel-designed dashboard optimized for logistics management, including **real-time simulated IoT telemetry**, **animated route trackers**, and **strict automated business logic** for vehicle dispatch, driver safety tracking, and operational expense auditing.
 
 ---
 
-## Project Structure
+## 🎨 Design System & UI/UX
+The application has been styled with a custom, custom-made **Elegant Pastel Theme** that avoids common AI-generated templates.
+- **Top Navigation Bar**: An integrated top-level menu featuring responsive routes, role identification badges, and instant user profile logging.
+- **Visual Grid dots Background**: Clean visual backdrop with curated CSS variable sets.
+- **Illustrated Placeholders**: Custom vector illustrations designed for empty state views (empty parking spaces, empty toolbox, idle drivers, empty receipt list) to ensure a complete and premium user experience.
+- **Micro-Animations**: Custom spring hover animations, floating hero illustrations, and smooth transitions on cards, buttons, and form modals.
 
+---
+
+## 🚀 Key Features
+
+* **📡 Live IoT Telemetry Simulator**: Dispatched vehicles transmit real-time telemetry updates (speed, engine RPM, coolant temperature, fuel consumption rate, tire pressure, and GPS coordinates) directly to the UI.
+* **📍 Animated SVG Route Tracker**: High-visibility SVG route path with a custom moving cargo truck indicator that maps transit progression in real-time.
+* **🛡️ Role-Based Access Control (RBAC)**: Secure access tailored to specific organizational roles with login triggers:
+  * **Fleet Manager**: Register vehicles/drivers and monitor overall fleet health.
+  * **Dispatcher**: Assign routes, dispatch trips, and mark completions.
+  * **Safety Officer**: Manage safety scorecards, license expirations, and safety logs.
+  * **Financial Analyst**: Analyze P&L logs, operational expense sheets, and download visual analytics report exports.
+* **📊 Visual Financial & ROI Reporting**: Interactive charts (via Chart.js) mapping monthly expenses, fuel efficiency analytics, and ROI matrices alongside instant CSV export capability.
+
+---
+
+## ⚙️ Automated Business Rules Engine
+The backend enforces strict logistics business rules to prevent human errors in dispatch:
+1. **Capacity Overload Check**: Automatically compares cargo weight against the vehicle's maximum registered load rating and raises warnings or blocks creation.
+2. **Status Locking**: Dispatching a trip locks both the driver and the vehicle's status to `On Trip`, rendering them unavailable for any other assignments.
+3. **Maintenance Lockout**: Placing a vehicle `In Shop` for maintenance excludes it from dispatch availability until the log is officially closed.
+4. **License Compliance**: Highlights license expiration warnings and prevents assigning drivers with expired papers to active trips.
+
+---
+
+## 📊 Application Architecture & Workflow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Dispatcher
+    actor FleetManager
+    participant System as TransitOps Engine
+    participant Database as MongoDB
+
+    FleetManager->>System: Register Vehicle (e.g., Heavy Truck) & Driver (Valid License)
+    System->>Database: Save details (Status: Available)
+    Dispatcher->>System: Create Trip (Checks cargo weight vs vehicle capacity)
+    System->>Database: Save Trip as Draft
+    Dispatcher->>System: Dispatch Trip
+    System->>Database: Set Driver & Vehicle status to "On Trip"
+    Note over System: IoT Telemetry Simulator Begins Transmitting Live Speed, Temp & GPS
+    Dispatcher->>System: Complete Trip (Submit end odometer & fuel consumed)
+    System->>Database: Calculate Fuel Efficiency & ROI. Reset Driver/Vehicle to "Available"
 ```
+
+---
+
+## 🛠️ Project Structure
+```text
 ├── client/          # Frontend React + Vite application
+│   ├── src/
+│   │   ├── assets/       # Illustrated empty states, login hero, icons
+│   │   ├── components/   # Navbar, StatusBadge, EmptyState components
+│   │   ├── pages/        # Dashboard, Registry, Logs, & Reports Pages
+│   │   └── index.css     # Global elegant pastel variables and styling
 └── server/          # Backend Node.js + Express API
+    ├── models/      # Mongoose Schema Definitions
+    ├── routes/      # Express API Routers
+    └── seed.js      # Comprehensive realistic logistics data seeder
 ```
 
 ---
 
-## Prerequisites
+## 🚀 Getting Started & Setup
 
-Before running this project, ensure you have the following installed:
-1. **Node.js** (v16.x or higher recommended)
-2. **MongoDB** (running locally or a MongoDB Atlas URI)
+### Prerequisites
+- **Node.js** (v18.x or higher)
+- **MongoDB** (running locally on port `27017` or Atlas URL)
 
----
-
-## Getting Started
-
-### 1. Database Setup & Configuration
-
+### 1. Backend Setup
 1. Navigate to the `server/` directory:
    ```bash
    cd server
    ```
-2. Copy the example environment file to create your `.env` file:
+2. Setup environment variables:
    ```bash
    copy .env.example .env
-   # or on macOS/Linux: cp .env.example .env
    ```
-3. Open the `.env` file and configure your settings:
-   - **`PORT`**: The backend server port (defaults to `5000`).
-   - **`MONGO_URI`**: The connection string for your MongoDB database (e.g., `mongodb://localhost:27017/transitops`).
-   - **`JWT_SECRET`**: A secret key used to sign JSON Web Tokens (e.g., `supersecretjwtkey`).
-
----
-
-### 2. Install Dependencies & Seed Data
-
-#### Backend Setup
-1. Inside the `server/` directory, install the required dependencies:
+   *Edit `.env` and configure your `MONGO_URI` and `JWT_SECRET`.*
+3. Install dependencies:
    ```bash
    npm install
    ```
-2. (Optional but highly recommended) Run the seed script to populate your database with dummy users, vehicles, drivers, trips, fuel logs, maintenance reports, and expense data:
+4. **Seed the database** with realistic logistics data:
    ```bash
    node seed.js
    ```
-
-#### Frontend Setup
-1. Open a new terminal and navigate to the `client/` directory:
+5. Start development API server:
    ```bash
-   cd client
+   npm run dev
    ```
-2. Install the frontend dependencies:
+   *The server runs on `http://localhost:5000`.*
+
+### 2. Frontend Setup
+1. Navigate to the `client/` directory:
+   ```bash
+   cd ../client
+   ```
+2. Install dependencies:
    ```bash
    npm install
    ```
+3. Start the development client:
+   ```bash
+   npm run dev
+   ```
+   *The frontend runs on `http://localhost:5173`.*
 
 ---
 
-### 3. Running the Applications
+## 🔑 Quick Demo Login Credentials
+For testing purposes, the database seeder creates standard user accounts. The password for all accounts is **`password123`**:
 
-#### Start the Backend Server
-From the `server/` directory, run:
-- **Development Mode** (with hot-reloading via `nodemon`):
-  ```bash
-  npm run dev
-  ```
-- **Production Mode**:
-  ```bash
-  npm start
-  ```
-The server will start running at `http://localhost:5000`.
-
-#### Start the Frontend Client
-From the `client/` directory, run:
-- **Development Server**:
-  ```bash
-  npm run dev
-  ```
-The Vite development server will start, typically at `http://localhost:5173`. 
-The frontend is pre-configured to proxy API requests to `http://localhost:5000`.
-
----
-
-## Seed Users / Logins
-When the database is seeded using `node seed.js`, the password for all users is set to **`password123`**. You can log in using any of the following accounts:
-
-| Name | Email | Role |
+| Name | Role | Email Address |
 | :--- | :--- | :--- |
-| Alice Smith | `manager@transitops.com` | Fleet Manager |
-| Bob Jones | `dispatcher@transitops.com` | Dispatcher |
-| Charlie Safety | `safety@transitops.com` | Safety Officer |
-| Diana Penny | `finance@transitops.com` | Financial Analyst |
+| **Alice Smith** | Fleet Manager | `manager@transitops.com` |
+| **Bob Jones** | Dispatcher | `dispatcher@transitops.com` |
+| **Charlie Safety** | Safety Officer | `safety@transitops.com` |
+| **Diana Penny** | Financial Analyst | `finance@transitops.com` |
+
+---
+*Created as a premium logistics hackathon project.*
