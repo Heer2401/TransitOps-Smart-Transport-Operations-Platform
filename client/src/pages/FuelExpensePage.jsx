@@ -132,16 +132,23 @@ const FuelExpensePage = () => {
           </div>
 
           {/* Tabs */}
-          <div style={{ display: 'flex', gap: '2px', background: 'var(--bg-input)', borderRadius: '8px', padding: '3px', marginBottom: '20px', width: 'fit-content' }}>
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', width: 'fit-content' }}>
             {['fuel', 'expenses'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 style={{
-                  padding: '8px 20px', borderRadius: '6px', border: 'none', cursor: 'pointer',
-                  fontWeight: 600, fontSize: '13px', transition: 'all 0.2s',
-                  background: activeTab === tab ? 'var(--primary)' : 'transparent',
-                  color: activeTab === tab ? 'white' : 'var(--text-muted)'
+                  padding: '9px 22px',
+                  borderRadius: 'var(--radius-sm)',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                  transition: 'var(--t1)',
+                  fontFamily: 'Inter, sans-serif',
+                  background: activeTab === tab ? 'linear-gradient(135deg, var(--lavender-soft), var(--mint-soft))' : 'white',
+                  color: activeTab === tab ? 'var(--lavender-dark)' : 'var(--text-muted)',
+                  border: activeTab === tab ? '1.5px solid var(--lavender-mid)' : '1.5px solid var(--border)',
+                  boxShadow: activeTab === tab ? '0 2px 8px rgba(167,139,250,0.15)' : 'var(--shadow-sm)'
                 }}
               >
                 {tab === 'fuel' ? '⛽ Fuel Logs' : '💸 Expenses'}
