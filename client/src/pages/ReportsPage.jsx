@@ -13,12 +13,12 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointEleme
 
 const chartDefaults = {
   plugins: {
-    legend: { labels: { color: '#94A3B8', font: { size: 12 } } },
-    tooltip: { backgroundColor: '#1A2235', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, titleColor: '#F1F5F9', bodyColor: '#94A3B8' }
+    legend: { labels: { color: '#334155', font: { size: 12 } } },
+    tooltip: { backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', borderWidth: 1, titleColor: '#0F172A', bodyColor: '#334155' }
   },
   scales: {
-    x: { ticks: { color: '#64748B' }, grid: { color: 'rgba(255,255,255,0.04)' } },
-    y: { ticks: { color: '#64748B' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+    x: { ticks: { color: '#64748B' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+    y: { ticks: { color: '#64748B' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } }
   }
 };
 
@@ -82,16 +82,16 @@ const ReportsPage = () => {
       {
         label: 'Total Trips',
         data: monthlyData.map(d => d.total),
-        backgroundColor: 'rgba(108, 99, 255, 0.7)',
-        borderColor: '#6C63FF',
+        backgroundColor: 'rgba(189, 178, 255, 0.7)',
+        borderColor: '#BDB2FF',
         borderWidth: 1,
         borderRadius: 4,
       },
       {
         label: 'Completed',
         data: monthlyData.map(d => d.completed),
-        backgroundColor: 'rgba(6, 214, 160, 0.7)',
-        borderColor: '#06D6A0',
+        backgroundColor: 'rgba(202, 255, 191, 0.7)',
+        borderColor: '#CAFFBF',
         borderWidth: 1,
         borderRadius: 4,
       }
@@ -102,7 +102,7 @@ const ReportsPage = () => {
     labels: analytics?.vehicleTypeDistribution.map(d => d._id) || [],
     datasets: [{
       data: analytics?.vehicleTypeDistribution.map(d => d.count) || [],
-      backgroundColor: ['#6C63FF', '#00D9C4', '#FFD166', '#EF476F', '#FF6B6B', '#06D6A0'],
+      backgroundColor: ['#BDB2FF', '#9BF6FF', '#FDFFB6', '#FFADAD', '#FFC6FF', '#CAFFBF'],
       borderWidth: 0,
     }]
   };
@@ -115,16 +115,16 @@ const ReportsPage = () => {
       {
         label: 'Fuel Cost (₹)',
         data: monthlyFuelData.map(d => d.totalCost),
-        borderColor: '#FFD166',
-        backgroundColor: 'rgba(255, 209, 102, 0.1)',
+        borderColor: '#FFD6A5',
+        backgroundColor: 'rgba(255, 214, 165, 0.25)',
         fill: true,
         tension: 0.4,
       },
       {
         label: 'Liters',
         data: monthlyFuelData.map(d => d.totalLiters),
-        borderColor: '#00D9C4',
-        backgroundColor: 'rgba(0, 217, 196, 0.1)',
+        borderColor: '#9BF6FF',
+        backgroundColor: 'rgba(155, 246, 255, 0.25)',
         fill: true,
         tension: 0.4,
         yAxisID: 'y1'
@@ -147,7 +147,7 @@ const ReportsPage = () => {
     datasets: [{
       label: 'Km/L',
       data: fuelEffData.map(d => parseFloat(d.efficiency?.toFixed(2))),
-      backgroundColor: fuelEffData.map((_, i) => `hsl(${200 + i * 30}, 70%, 55%)`),
+      backgroundColor: fuelEffData.map((_, i) => `hsl(${200 + i * 30}, 75%, 75%)`),
       borderWidth: 0,
       borderRadius: 4,
     }]

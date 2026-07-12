@@ -3,14 +3,14 @@ import api from '../api/axios';
 import Sidebar from '../components/Sidebar';
 
 const kpiConfig = [
-  { key: 'totalVehicles', label: 'Total Vehicles', icon: '🚛', color: '#6C63FF', sub: null },
-  { key: 'availableVehicles', label: 'Available Vehicles', icon: '✅', color: '#06D6A0', sub: 'vehicles.available' },
-  { key: 'onTripVehicles', label: 'On Trip', icon: '🛣️', color: '#FFD166', sub: 'vehicles.onTrip' },
-  { key: 'inShopVehicles', label: 'In Shop', icon: '🔧', color: '#FF6B6B', sub: 'vehicles.inShop' },
-  { key: 'activeTrips', label: 'Active Trips', icon: '🗺️', color: '#6C63FF', sub: 'trips.active' },
-  { key: 'pendingTrips', label: 'Pending Trips', icon: '⏳', color: '#FFD166', sub: 'trips.pending' },
-  { key: 'driversOnDuty', label: 'Drivers On Duty', icon: '👤', color: '#00D9C4', sub: 'drivers.onDuty' },
-  { key: 'fleetUtil', label: 'Fleet Utilization', icon: '📊', color: '#6C63FF', sub: null, suffix: '%' },
+  { key: 'totalVehicles', label: 'Total Vehicles', icon: '🚛', color: 'var(--primary)', sub: null },
+  { key: 'availableVehicles', label: 'Available Vehicles', icon: '✅', color: 'var(--success)', sub: 'vehicles.available' },
+  { key: 'onTripVehicles', label: 'On Trip', icon: '🛣️', color: 'var(--warning)', sub: 'vehicles.onTrip' },
+  { key: 'inShopVehicles', label: 'In Shop', icon: '🔧', color: 'var(--accent)', sub: 'vehicles.inShop' },
+  { key: 'activeTrips', label: 'Active Trips', icon: '🗺️', color: 'var(--primary)', sub: 'trips.active' },
+  { key: 'pendingTrips', label: 'Pending Trips', icon: '⏳', color: 'var(--warning)', sub: 'trips.pending' },
+  { key: 'driversOnDuty', label: 'Drivers On Duty', icon: '👤', color: 'var(--secondary-dark)', sub: 'drivers.onDuty' },
+  { key: 'fleetUtil', label: 'Fleet Utilization', icon: '📊', color: 'var(--primary)', sub: null, suffix: '%' },
 ];
 
 const DashboardPage = () => {

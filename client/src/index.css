@@ -2,37 +2,43 @@
 
 /* ===== CSS Variables ===== */
 :root {
-  --primary: #6C63FF;
-  --primary-dark: #5A52D5;
-  --primary-light: #8B85FF;
-  --secondary: #00D9C4;
-  --secondary-dark: #00B5A3;
-  --accent: #FF6B6B;
-  --warning: #FFD166;
-  --success: #06D6A0;
-  --danger: #EF476F;
+  /* Brand Pastel Colors */
+  --primary: #BDB2FF;          /* Pastel Purple */
+  --primary-dark: #A78BFA;     /* Slightly darker pastel purple for hover */
+  --primary-light: #CBBFFF;    /* Very soft lavender */
+  --secondary: #9BF6FF;        /* Pastel Mint/Light Blue */
+  --secondary-dark: #80E3ED;   /* Deeper pastel teal */
+  --accent: #FFADAD;           /* Pastel Coral/Red */
+  --warning: #FDFFB6;          /* Pastel Yellow */
+  --success: #CAFFBF;          /* Pastel Green */
+  --danger: #FFADAD;           /* Pastel Coral/Red (same as accent for danger) */
   
-  --bg-dark: #0A0E1A;
-  --bg-card: #111827;
-  --bg-card-hover: #1A2235;
-  --bg-sidebar: #0D1526;
-  --bg-input: #1E2A3B;
-  --bg-modal: #111827;
+  /* Layout & Component Backgrounds (Light Pastel Theme) */
+  --bg-dark: #F8FAFC;          /* Soft slate background */
+  --bg-card: #FFFFFF;          /* Pure white card */
+  --bg-card-hover: #F1F5F9;    /* Soft slate hover background */
+  --bg-sidebar: #FFFFFF;       /* Sidebar background */
+  --bg-input: #F8FAFC;         /* Light inputs matching page background */
+  --bg-modal: #FFFFFF;         /* White modal */
   
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
+  /* High-Contrast Readable Typography */
+  --text-primary: #0F172A;     /* Slate 900 (deep charcoal for readability) */
+  --text-secondary: #334155;   /* Slate 700 (subheadings, secondary labels) */
+  --text-muted: #64748B;       /* Slate 500 (captions, placeholders) */
   
-  --border: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(108, 99, 255, 0.5);
+  /* Borders & Focus outlines */
+  --border: #E2E8F0;           /* Soft border lines (Slate 200) */
+  --border-focus: #CBD5E1;     /* Focused inputs border (Slate 300) */
   
-  --glass: rgba(17, 24, 39, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  /* Glassmorphism details (light transparent values) */
+  --glass: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.06);
   
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 30px rgba(108, 99, 255, 0.15);
+  /* Soft, warm shadows for light background */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 0 25px rgba(189, 178, 255, 0.25);
   
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -263,7 +269,7 @@ body {
 /* ===== Header ===== */
 .topbar {
   height: var(--header-height);
-  background: rgba(10, 14, 26, 0.9);
+  background: var(--glass);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   padding: 0 24px;
@@ -428,7 +434,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(var(--kpi-rgb, 108, 99, 255), 0.12);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
 }
 
 .kpi-value {
@@ -541,7 +548,7 @@ table {
 }
 
 th {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.02);
   padding: 11px 16px;
   text-align: left;
   font-size: 11px;
@@ -557,7 +564,7 @@ td {
   padding: 14px 16px;
   font-size: 13px;
   color: var(--text-secondary);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border);
   vertical-align: middle;
 }
 
@@ -592,24 +599,24 @@ tbody tr:hover {
   background: currentColor;
 }
 
-.badge-available { color: var(--success); background: rgba(6, 214, 160, 0.12); border: 1px solid rgba(6, 214, 160, 0.2); }
-.badge-on-trip { color: var(--warning); background: rgba(255, 209, 102, 0.12); border: 1px solid rgba(255, 209, 102, 0.2); }
-.badge-in-shop { color: var(--accent); background: rgba(255, 107, 107, 0.12); border: 1px solid rgba(255, 107, 107, 0.2); }
-.badge-retired { color: var(--text-muted); background: rgba(100, 116, 139, 0.12); border: 1px solid rgba(100, 116, 139, 0.2); }
-.badge-suspended { color: var(--danger); background: rgba(239, 71, 111, 0.12); border: 1px solid rgba(239, 71, 111, 0.2); }
-.badge-off-duty { color: var(--text-secondary); background: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.15); }
-.badge-draft { color: var(--text-secondary); background: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.15); }
-.badge-dispatched { color: var(--primary-light); background: rgba(108, 99, 255, 0.12); border: 1px solid rgba(108, 99, 255, 0.2); }
-.badge-completed { color: var(--success); background: rgba(6, 214, 160, 0.12); border: 1px solid rgba(6, 214, 160, 0.2); }
-.badge-cancelled { color: var(--danger); background: rgba(239, 71, 111, 0.12); border: 1px solid rgba(239, 71, 111, 0.2); }
-.badge-open { color: var(--warning); background: rgba(255, 209, 102, 0.12); border: 1px solid rgba(255, 209, 102, 0.2); }
-.badge-closed { color: var(--success); background: rgba(6, 214, 160, 0.12); border: 1px solid rgba(6, 214, 160, 0.2); }
+.badge-available { color: #166534; background: #DCFCE7; border: 1px solid #BBF7D0; }
+.badge-on-trip { color: #9A3412; background: #FFEDD5; border: 1px solid #FED7AA; }
+.badge-in-shop { color: #991B1B; background: #FEE2E2; border: 1px solid #FECACA; }
+.badge-retired { color: #334155; background: #F1F5F9; border: 1px solid #E2E8F0; }
+.badge-suspended { color: #991B1B; background: #FEE2E2; border: 1px solid #FECACA; }
+.badge-off-duty { color: #334155; background: #F1F5F9; border: 1px solid #E2E8F0; }
+.badge-draft { color: #334155; background: #F1F5F9; border: 1px solid #E2E8F0; }
+.badge-dispatched { color: #5B21B6; background: #F3E8FF; border: 1px solid #E9D5FF; }
+.badge-completed { color: #166534; background: #DCFCE7; border: 1px solid #BBF7D0; }
+.badge-cancelled { color: #991B1B; background: #FEE2E2; border: 1px solid #FECACA; }
+.badge-open { color: #9A3412; background: #FFEDD5; border: 1px solid #FED7AA; }
+.badge-closed { color: #166534; background: #DCFCE7; border: 1px solid #BBF7D0; }
 
 /* ===== Forms & Modals ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(15, 23, 42, 0.4);
   backdrop-filter: blur(4px);
   z-index: 200;
   display: flex;
@@ -768,9 +775,9 @@ select option { background: var(--bg-card); }
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse at 20% 20%, rgba(108, 99, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(0, 217, 196, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(108, 99, 255, 0.05) 0%, transparent 70%);
+    radial-gradient(ellipse at 20% 20%, rgba(189, 178, 255, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(155, 246, 255, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(189, 178, 255, 0.1) 0%, transparent 70%);
 }
 
 .auth-card {
@@ -930,9 +937,9 @@ select option { background: var(--bg-card); }
   gap: 8px;
 }
 
-.alert-error { background: rgba(239, 71, 111, 0.1); border: 1px solid rgba(239, 71, 111, 0.25); color: #ff8fab; }
-.alert-success { background: rgba(6, 214, 160, 0.1); border: 1px solid rgba(6, 214, 160, 0.25); color: var(--success); }
-.alert-warning { background: rgba(255, 209, 102, 0.1); border: 1px solid rgba(255, 209, 102, 0.25); color: var(--warning); }
+.alert-error { background: #FEE2E2; border: 1px solid #FECACA; color: #991B1B; }
+.alert-success { background: #DCFCE7; border: 1px solid #BBF7D0; color: #166534; }
+.alert-warning { background: #FEF3C7; border: 1px solid #FDE68A; color: #92400E; }
 
 /* ===== Action Buttons Group ===== */
 .action-btns { display: flex; gap: 6px; }
@@ -963,7 +970,7 @@ select option { background: var(--bg-card); }
 .progress-bar {
   width: 100%;
   height: 6px;
-  background: rgba(255,255,255,0.08);
+  background: #E2E8F0;
   border-radius: 3px;
   overflow: hidden;
 }
