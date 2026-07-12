@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 import StatusBadge from '../components/StatusBadge';
+import EmptyState from '../components/EmptyState';
+import emptyTripsImg from '../assets/empty_trips.png';
 import { toast } from 'react-toastify';
 
 const emptyForm = {
@@ -148,10 +150,11 @@ const TripsPage = () => {
             {loading ? (
               <div className="loading-spinner"><div className="spinner"></div></div>
             ) : trips.length === 0 ? (
-              <div className="empty-state">
-                <div className="empty-icon">🗺️</div>
-                <div className="empty-title">No trips found</div>
-              </div>
+              <EmptyState
+                image={emptyTripsImg}
+                title="No trips found"
+                description="Create your first trip to begin tracking your fleet's movements."
+              />
             ) : (
               <table>
                 <thead>

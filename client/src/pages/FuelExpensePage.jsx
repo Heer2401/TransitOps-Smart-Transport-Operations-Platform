@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
+import EmptyState from '../components/EmptyState';
+import emptyFuelImg from '../assets/empty_fuel.png';
 import { toast } from 'react-toastify';
 
 const expenseTypes = ['Toll', 'Maintenance', 'Miscellaneous', 'Insurance', 'Permit', 'Fine', 'Parking'];
@@ -164,7 +166,11 @@ const FuelExpensePage = () => {
                 <div className="table-title">Fuel Logs ({fuelLogs.length})</div>
               </div>
               {fuelLogs.length === 0 ? (
-                <div className="empty-state"><div className="empty-icon">⛽</div><div className="empty-title">No fuel logs</div></div>
+                <EmptyState
+                  image={emptyFuelImg}
+                  title="No fuel logs yet"
+                  description="Start logging fuel fills to track your fleet's fuel consumption and costs."
+                />
               ) : (
                 <table>
                   <thead>
@@ -209,7 +215,11 @@ const FuelExpensePage = () => {
                 <div className="table-title">Expenses ({expenses.length})</div>
               </div>
               {expenses.length === 0 ? (
-                <div className="empty-state"><div className="empty-icon">💸</div><div className="empty-title">No expenses recorded</div></div>
+                <EmptyState
+                  image={emptyFuelImg}
+                  title="No expenses recorded"
+                  description="Track toll fees, permits, insurance, and other operational expenses here."
+                />
               ) : (
                 <table>
                   <thead>

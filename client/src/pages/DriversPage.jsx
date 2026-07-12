@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 import StatusBadge from '../components/StatusBadge';
+import EmptyState from '../components/EmptyState';
+import emptyDriversImg from '../assets/empty_drivers.png';
 import { toast } from 'react-toastify';
 
 const licenseCategories = ['A', 'B', 'C', 'D', 'E', 'LMV', 'HMV', 'HGMV'];
@@ -131,11 +133,11 @@ const DriversPage = () => {
             {loading ? (
               <div className="loading-spinner"><div className="spinner"></div></div>
             ) : drivers.length === 0 ? (
-              <div className="empty-state">
-                <div className="empty-icon">👤</div>
-                <div className="empty-title">No drivers found</div>
-                <div className="empty-text">Add your first driver to get started</div>
-              </div>
+              <EmptyState
+                image={emptyDriversImg}
+                title="No drivers found"
+                description="Register your first driver to get started, or adjust your search filters."
+              />
             ) : (
               <table>
                 <thead>

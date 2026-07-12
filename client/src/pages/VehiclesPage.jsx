@@ -2,11 +2,23 @@ import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 import StatusBadge from '../components/StatusBadge';
+import EmptyState from '../components/EmptyState';
+import emptyVehiclesImg from '../assets/empty_vehicles.png';
 import { toast } from 'react-toastify';
 
 const vehicleTypes = ['Truck', 'Van', 'Bus', 'Car', 'Motorcycle', 'Heavy Equipment'];
 const statuses = ['Available', 'On Trip', 'In Shop', 'Retired'];
 const fuelTypes = ['Diesel', 'Petrol', 'Electric', 'Hybrid', 'CNG'];
+
+// Vehicle type → icon + color mapping
+const typeConfig = {
+  'Truck':           { icon: '🚛', bg: '#EDE9FE', color: '#5B21B6' },
+  'Van':             { icon: '🚐', bg: '#D1FAE5', color: '#065F46' },
+  'Bus':             { icon: '🚌', bg: '#DBEAFE', color: '#1E40AF' },
+  'Car':             { icon: '🚗', bg: '#FEF3C7', color: '#92400E' },
+  'Motorcycle':      { icon: '🏍️', bg: '#FFE4E6', color: '#9F1239' },
+  'Heavy Equipment': { icon: '🚜', bg: '#F3F4F6', color: '#374151' },
+};
 
 const emptyForm = {
   registrationNumber: '', name: '', model: '', type: 'Truck',
@@ -119,11 +131,11 @@ const VehiclesPage = () => {
             {loading ? (
               <div className="loading-spinner"><div className="spinner"></div></div>
             ) : vehicles.length === 0 ? (
-              <div className="empty-state">
-                <div className="empty-icon">🚛</div>
-                <div className="empty-title">No vehicles found</div>
-                <div className="empty-text">Add your first vehicle to get started</div>
-              </div>
+              <EmptyState
+                image={emptyVehiclesImg}
+                title="No vehicles found"
+                description="Add your first vehicle to get started, or adjust your search filters."
+              />
             ) : (
               <table>
                 <thead>
@@ -147,7 +159,21 @@ const VehiclesPage = () => {
                         <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{v.name}</div>
                         <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{v.model} {v.year && `· ${v.year}`}</div>
                       </td>
-                      <td>{v.type}</td>
+                      <td>
+                        {(() => {
+                          const cfg = typeConfig[v.type] || { icon: '🚗', bg: '#F1F5F9', color: '#475569' };
+                          return (
+                            <span style={{
+                              display: 'inline-flex', alignItems: 'center', gap: '5px',
+                              background: cfg.bg, color: cfg.color,
+                              padding: '3px 10px', borderRadius: '20px',
+                              fontSize: '11px', fontWeight: 600
+                            }}>
+                              {cfg.icon} {v.type}
+                            </span>
+                          );
+                        })()}
+                      </td>
                       <td>{fmt(v.maxLoadCapacity)} kg</td>
                       <td>{fmt(v.odometer)} km</td>
                       <td>₹{fmt(v.acquisitionCost)}</td>

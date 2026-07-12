@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 import StatusBadge from '../components/StatusBadge';
+import EmptyState from '../components/EmptyState';
+import emptyMaintenanceImg from '../assets/empty_maintenance.png';
 import { toast } from 'react-toastify';
 
 const maintenanceTypes = ['Oil Change', 'Tire Replacement', 'Brake Service', 'Engine Repair', 'Transmission', 'Electrical', 'Body Work', 'Annual Service', 'Inspection', 'Other'];
@@ -131,10 +133,11 @@ const MaintenancePage = () => {
             {loading ? (
               <div className="loading-spinner"><div className="spinner"></div></div>
             ) : logs.length === 0 ? (
-              <div className="empty-state">
-                <div className="empty-icon">🔧</div>
-                <div className="empty-title">No maintenance records</div>
-              </div>
+              <EmptyState
+                image={emptyMaintenanceImg}
+                title="No maintenance records"
+                description="All vehicles are in great shape! Add a maintenance record when a vehicle needs attention."
+              />
             ) : (
               <table>
                 <thead>
