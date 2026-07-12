@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 
@@ -16,12 +17,52 @@ const kpiConfig = [
 const DashboardPage = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeTripsList, setActiveTripsList] = useState([]);
+  const [telemetrySim, setTelemetrySim] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDashboard();
-    const interval = setInterval(fetchDashboard, 30000); // refresh every 30s
+    fetchActiveTrips();
+    const interval = setInterval(() => {
+      fetchDashboard();
+      fetchActiveTrips();
+    }, 30000); // refresh API data every 30s
     return () => clearInterval(interval);
   }, []);
+
+  // Telemetry sensor simulator loop
+  useEffect(() => {
+    if (activeTripsList.length === 0) return;
+
+    const interval = setInterval(() => {
+      setTelemetrySim(prev => {
+        const next = { ...prev };
+        activeTripsList.forEach(t => {
+          const current = prev[t._id] || {
+            speed: 60 + Math.floor(Math.random() * 15),
+            progress: 10 + Math.floor(Math.random() * 50),
+            temp: 82 + Math.floor(Math.random() * 6),
+            fuel: 75
+          };
+
+          const speedDelta = (Math.random() - 0.5) * 8;
+          const progressDelta = Math.random() * 0.4; // advance route slowly
+          const tempDelta = (Math.random() - 0.5) * 2;
+
+          next[t._id] = {
+            speed: Math.min(Math.max(Math.round(current.speed + speedDelta), 40), 85),
+            progress: Math.min(parseFloat((current.progress + progressDelta).toFixed(2)), 99.9),
+            temp: Math.min(Math.max(Math.round(current.temp + tempDelta), 78), 92),
+            fuel: Math.max(parseFloat((current.fuel - 0.05).toFixed(1)), 15)
+          };
+        });
+        return next;
+      });
+    }, 2000); // update telemetry indicators every 2s
+
+    return () => clearInterval(interval);
+  }, [activeTripsList]);
 
   const fetchDashboard = async () => {
     try {
@@ -31,6 +72,15 @@ const DashboardPage = () => {
       console.error('Dashboard error:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchActiveTrips = async () => {
+    try {
+      const res = await api.get('/trips', { params: { status: 'Dispatched' } });
+      setActiveTripsList(res.data);
+    } catch (err) {
+      console.error('Error fetching active trips:', err);
     }
   };
 
@@ -80,6 +130,85 @@ const DashboardPage = () => {
                 <div className="kpi-label">{k.label}</div>
               </div>
             ))}
+          </div>
+
+          {/* IoT Active Fleet Monitor */}
+          <div className="card" style={{ marginBottom: '24px', borderLeft: '4px solid var(--lavender-dark)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'Space Grotesk' }}>
+                📡 Live Active Fleet Telemetry Monitor
+              </h3>
+              <span style={{ fontSize: '11px', background: 'var(--lavender-soft)', color: 'var(--lavender-dark)', padding: '4px 8px', borderRadius: '4px', fontWeight: 600 }}>
+                ● Real-time Sensor simulation active
+              </span>
+            </div>
+
+            {activeTripsList.length === 0 ? (
+              <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px' }}>
+                No vehicles are currently dispatched on trips. Move to <strong>Trips</strong> and dispatch a trip to activate.
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {activeTripsList.map(t => {
+                  const sim = telemetrySim[t._id] || { speed: 65, progress: 35, temp: 82, fuel: 80 };
+                  return (
+                    <div key={t._id} style={{ display: 'flex', alignItems: 'center', justifySelf: 'stretch', justifyContent: 'space-between', background: 'var(--bg-input)', padding: '12px 18px', borderRadius: 'var(--radius-md)', border: '1.5px solid var(--border)', flexWrap: 'wrap', gap: '12px' }}>
+                      
+                      {/* Trip info */}
+                      <div style={{ minWidth: '180px' }}>
+                        <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'monospace', fontSize: '13px' }}>
+                          {t.tripNumber} — {t.vehicle?.registrationNumber}
+                        </div>
+                        <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                          {t.source} → {t.destination}
+                        </div>
+                      </div>
+
+                      {/* Driver info */}
+                      <div style={{ minWidth: '120px' }}>
+                        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>DRIVER</span>
+                        <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>{t.driver?.name}</div>
+                      </div>
+
+                      {/* Live Indicators */}
+                      <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                        <div>
+                          <span style={{ display: 'block', fontSize: '10px', color: 'var(--text-muted)' }}>SPEED</span>
+                          <strong style={{ fontSize: '13px', color: 'var(--text-primary)' }}>{sim.speed} km/h</strong>
+                        </div>
+                        <div>
+                          <span style={{ display: 'block', fontSize: '10px', color: 'var(--text-muted)' }}>TEMP</span>
+                          <strong style={{ fontSize: '13px', color: sim.temp > 89 ? 'var(--danger)' : 'var(--text-primary)' }}>{sim.temp}°C</strong>
+                        </div>
+                        <div>
+                          <span style={{ display: 'block', fontSize: '10px', color: 'var(--text-muted)' }}>FUEL</span>
+                          <strong style={{ fontSize: '13px', color: 'var(--text-primary)' }}>{sim.fuel}%</strong>
+                        </div>
+                      </div>
+
+                      {/* Route Progress bar */}
+                      <div style={{ minWidth: '160px', flex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
+                          <span style={{ color: 'var(--text-muted)' }}>Route Progress</span>
+                          <strong style={{ color: 'var(--lavender-dark)' }}>{sim.progress.toFixed(1)}%</strong>
+                        </div>
+                        <div className="progress-bar" style={{ height: '5px' }}>
+                          <div className="progress-fill" style={{ width: `${sim.progress}%`, background: 'var(--lavender-dark)' }}></div>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div>
+                        <button className="topbar-btn btn-secondary btn-sm" onClick={() => navigate(`/trips/${t._id}`)}>
+                          🛰️ Track Live
+                        </button>
+                      </div>
+
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
