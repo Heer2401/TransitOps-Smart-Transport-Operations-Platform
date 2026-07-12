@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
 
 const kpiConfig = [
   { key: 'totalVehicles', label: 'Total Vehicles', icon: '🚛', color: 'var(--primary)', sub: null },
@@ -36,7 +36,7 @@ const DashboardPage = () => {
 
   if (loading) return (
     <div className="app-layout">
-      <Sidebar />
+      <Navbar />
       <div className="main-content">
         <div className="loading-spinner"><div className="spinner"></div><p className="loading-text">Loading dashboard...</p></div>
       </div>
@@ -58,7 +58,7 @@ const DashboardPage = () => {
 
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Navbar />
       <div className="main-content">
         <div className="topbar">
           <div className="topbar-left">

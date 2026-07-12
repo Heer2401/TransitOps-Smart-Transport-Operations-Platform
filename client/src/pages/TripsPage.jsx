@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
 import StatusBadge from '../components/StatusBadge';
 import { toast } from 'react-toastify';
 
@@ -117,7 +117,7 @@ const TripsPage = () => {
 
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Navbar />
       <div className="main-content">
         <div className="topbar">
           <div className="topbar-left">

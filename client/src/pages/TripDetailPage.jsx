@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
 import StatusBadge from '../components/StatusBadge';
 
 const TripDetailPage = () => {
@@ -21,7 +21,7 @@ const TripDetailPage = () => {
 
   if (loading) return (
     <div className="app-layout">
-      <Sidebar />
+      <Navbar />
       <div className="main-content">
         <div className="loading-spinner"><div className="spinner"></div></div>
       </div>
@@ -33,7 +33,7 @@ const TripDetailPage = () => {
 
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Navbar />
       <div className="main-content">
         <div className="topbar">
           <div className="topbar-left">

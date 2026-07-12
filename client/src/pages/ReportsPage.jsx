@@ -6,7 +6,7 @@ import {
 } from 'chart.js';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import api from '../api/axios';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
 import { toast } from 'react-toastify';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend, Filler);
@@ -65,7 +65,7 @@ const ReportsPage = () => {
 
   if (loading) return (
     <div className="app-layout">
-      <Sidebar />
+      <Navbar />
       <div className="main-content">
         <div className="loading-spinner"><div className="spinner"></div><p className="loading-text">Loading analytics...</p></div>
       </div>
@@ -158,7 +158,7 @@ const ReportsPage = () => {
 
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Navbar />
       <div className="main-content">
         <div className="topbar">
           <div className="topbar-left">
